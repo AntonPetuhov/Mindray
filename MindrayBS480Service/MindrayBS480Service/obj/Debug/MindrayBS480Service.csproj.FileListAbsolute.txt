@@ -1,0 +1,16 @@
+C:\Users\anton.petuhov\source\repos\MindrayBS480Service\MindrayBS480Service\bin\Debug\MindrayBS480Service.exe.config
+C:\Users\anton.petuhov\source\repos\MindrayBS480Service\MindrayBS480Service\bin\Debug\MindrayBS480Service.exe
+C:\Users\anton.petuhov\source\repos\MindrayBS480Service\MindrayBS480Service\bin\Debug\MindrayBS480Service.pdb
+C:\Users\anton.petuhov\source\repos\MindrayBS480Service\MindrayBS480Service\bin\Debug\System.Configuration.ConfigurationManager.dll
+C:\Users\anton.petuhov\source\repos\MindrayBS480Service\MindrayBS480Service\bin\Debug\System.Security.AccessControl.dll
+C:\Users\anton.petuhov\source\repos\MindrayBS480Service\MindrayBS480Service\bin\Debug\System.Security.Permissions.dll
+C:\Users\anton.petuhov\source\repos\MindrayBS480Service\MindrayBS480Service\bin\Debug\System.Security.Principal.Windows.dll
+C:\Users\anton.petuhov\source\repos\MindrayBS480Service\MindrayBS480Service\bin\Debug\System.Configuration.ConfigurationManager.xml
+C:\Users\anton.petuhov\source\repos\MindrayBS480Service\MindrayBS480Service\bin\Debug\System.Security.AccessControl.xml
+C:\Users\anton.petuhov\source\repos\MindrayBS480Service\MindrayBS480Service\bin\Debug\System.Security.Permissions.xml
+C:\Users\anton.petuhov\source\repos\MindrayBS480Service\MindrayBS480Service\bin\Debug\System.Security.Principal.Windows.xml
+C:\Users\anton.petuhov\source\repos\MindrayBS480Service\MindrayBS480Service\obj\Debug\MindrayBS480Service.csproj.AssemblyReference.cache
+C:\Users\anton.petuhov\source\repos\MindrayBS480Service\MindrayBS480Service\obj\Debug\MindrayBS480Service.csproj.CoreCompileInputs.cache
+C:\Users\anton.petuhov\source\repos\MindrayBS480Service\MindrayBS480Service\obj\Debug\MindrayBS480Service.csproj.CopyComplete
+C:\Users\anton.petuhov\source\repos\MindrayBS480Service\MindrayBS480Service\obj\Debug\MindrayBS480Service.exe
+C:\Users\anton.petuhov\source\repos\MindrayBS480Service\MindrayBS480Service\obj\Debug\MindrayBS480Service.pdb

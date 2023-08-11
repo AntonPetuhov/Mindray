@@ -1,0 +1,16 @@
+C:\Users\anton.petuhov\source\repos\MindrayBC6200Service\MindrayBC6200Service\bin\Debug\MindrayBC6200Service.exe.config
+C:\Users\anton.petuhov\source\repos\MindrayBC6200Service\MindrayBC6200Service\bin\Debug\MindrayBC6200Service.exe
+C:\Users\anton.petuhov\source\repos\MindrayBC6200Service\MindrayBC6200Service\bin\Debug\MindrayBC6200Service.pdb
+C:\Users\anton.petuhov\source\repos\MindrayBC6200Service\MindrayBC6200Service\bin\Debug\System.Configuration.ConfigurationManager.dll
+C:\Users\anton.petuhov\source\repos\MindrayBC6200Service\MindrayBC6200Service\bin\Debug\System.Security.AccessControl.dll
+C:\Users\anton.petuhov\source\repos\MindrayBC6200Service\MindrayBC6200Service\bin\Debug\System.Security.Permissions.dll
+C:\Users\anton.petuhov\source\repos\MindrayBC6200Service\MindrayBC6200Service\bin\Debug\System.Security.Principal.Windows.dll
+C:\Users\anton.petuhov\source\repos\MindrayBC6200Service\MindrayBC6200Service\bin\Debug\System.Configuration.ConfigurationManager.xml
+C:\Users\anton.petuhov\source\repos\MindrayBC6200Service\MindrayBC6200Service\bin\Debug\System.Security.AccessControl.xml
+C:\Users\anton.petuhov\source\repos\MindrayBC6200Service\MindrayBC6200Service\bin\Debug\System.Security.Permissions.xml
+C:\Users\anton.petuhov\source\repos\MindrayBC6200Service\MindrayBC6200Service\bin\Debug\System.Security.Principal.Windows.xml
+C:\Users\anton.petuhov\source\repos\MindrayBC6200Service\MindrayBC6200Service\obj\Debug\MindrayBC6200Service.csproj.AssemblyReference.cache
+C:\Users\anton.petuhov\source\repos\MindrayBC6200Service\MindrayBC6200Service\obj\Debug\MindrayBC6200Service.csproj.CoreCompileInputs.cache
+C:\Users\anton.petuhov\source\repos\MindrayBC6200Service\MindrayBC6200Service\obj\Debug\MindrayBC6200Service.csproj.CopyComplete
+C:\Users\anton.petuhov\source\repos\MindrayBC6200Service\MindrayBC6200Service\obj\Debug\MindrayBC6200Service.exe
+C:\Users\anton.petuhov\source\repos\MindrayBC6200Service\MindrayBC6200Service\obj\Debug\MindrayBC6200Service.pdb
