@@ -447,22 +447,30 @@ namespace MindrayBC6200Service
                                 {
                                     LISTestCode = TestsReader.GetString(0);
 
+                                    //ExchangeLog($"Test {LISTestCode} exist in request");
+
                                     // если тест NEUT# или NEUT%, то есть задание на DIFF
                                     if ((LISTestCode == "Г0075") || (LISTestCode == "Г0080"))
                                     {
                                         DiffExists = true;
+                                        ExchangeLog($"Test {LISTestCode} (NEUT#/%) exist in request");
+                                        //ExchangeLog("Tests NEUT# and NEUT% exists in request");
                                     }
 
                                     // если тест RET# или RET%, то есть задание на RET
                                     if ((LISTestCode == "Г0145") || (LISTestCode == "Г0150"))
                                     {
                                         RetExists = true;
+                                        ExchangeLog($"Test {LISTestCode} (RET#/%) exist in request");
+                                        //ExchangeLog("Tests RET# and RET% exists in request");
                                     }
 
                                     // если тест NRBC# или NRBC%, то есть задание на NRBC
                                     if ((LISTestCode == "Г0180") || (LISTestCode == "Г0185"))
                                     {
                                         NrbcExists = true;
+                                        ExchangeLog($"Test {LISTestCode} (NRBC#/%) exist in request");
+                                        //ExchangeLog("Tests NRBC# and NRBC% exists in request");
                                     }
                                 }
 
@@ -480,21 +488,34 @@ namespace MindrayBC6200Service
                 }
 
                 // определяем Test method
-                if (DiffExists || !RetExists || !NrbcExists)
+                #region определяем Test method
+                if (DiffExists && !RetExists && !NrbcExists)
                 {
                     TestMode = "CBC+DIFF";
-                    ExchangeLog("TestMode: " + TestMode);
+                    //ExchangeLog("TestMode: " + TestMode);
                 }
-                else if (DiffExists || RetExists || !NrbcExists)
+
+                if (DiffExists && RetExists && !NrbcExists)
                 {
                     TestMode = "CBC+DIFF+RET";
-                    ExchangeLog("TestMode: " + TestMode);
+                    //ExchangeLog("TestMode: " + TestMode);
                 }
-                else if (DiffExists || RetExists || NrbcExists)
+
+                if (DiffExists && !RetExists && NrbcExists)
+                {
+                    TestMode = "CBC+DIFF+NRBC";
+                    //ExchangeLog("TestMode: " + TestMode);
+                }
+
+                if (DiffExists && RetExists && NrbcExists)
                 {
                     TestMode = "CBC+DIFF+RET+NRBC";
-                    ExchangeLog("TestMode: " + TestMode);
+                    //ExchangeLog("TestMode: " + TestMode);
                 }
+
+                ExchangeLog("TestMode for execution: " + TestMode);
+
+                #endregion
 
                 // Если ШК существует, то отправляем задание прибору
                 if (RIDExists)

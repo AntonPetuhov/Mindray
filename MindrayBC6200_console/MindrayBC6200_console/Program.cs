@@ -470,21 +470,34 @@ namespace MindrayBC6200_console
                 }
 
                 // определяем Test method
-                if (DiffExists || !RetExists || !NrbcExists)
+                #region определяем Test method
+                if (DiffExists && !RetExists && !NrbcExists)
                 {
                     TestMode = "CBC+DIFF";
-                    ExchangeLog("TestMode: " + TestMode);
+                    //ExchangeLog("TestMode: " + TestMode);
                 }
-                else if (DiffExists || RetExists || !NrbcExists)
+
+                if (DiffExists && RetExists && !NrbcExists)
                 {
                     TestMode = "CBC+DIFF+RET";
-                    ExchangeLog("TestMode: " + TestMode);
+                    //ExchangeLog("TestMode: " + TestMode);
                 }
-                else if (DiffExists || RetExists || NrbcExists)
+
+                if (DiffExists && !RetExists && NrbcExists)
+                {
+                    TestMode = "CBC+DIFF+NRBC";
+                    //ExchangeLog("TestMode: " + TestMode);
+                }
+
+                if (DiffExists && RetExists && NrbcExists)
                 {
                     TestMode = "CBC+DIFF+RET+NRBC";
-                    ExchangeLog("TestMode: " + TestMode);
+                    //ExchangeLog("TestMode: " + TestMode);
                 }
+
+                ExchangeLog("TestMode for execution: " + TestMode);
+
+                #endregion
 
                 // Если ШК существует, то отправляем задание прибору
                 if (RIDExists)
