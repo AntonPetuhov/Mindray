@@ -741,11 +741,11 @@ namespace MindrayBS480_console
                                 FileResultLog(AllMessage);
 
                                 // создаем файл для записи результата в папке для рез-тов
-                                //if (!File.Exists(CGMPath + @"\" + FileName))
-                                if (!File.Exists(OutFolder + @"\" + FileName))
+                                if (!File.Exists(CGMPath + @"\" + FileName))
+                                //if (!File.Exists(OutFolder + @"\" + FileName))
                                 {
-                                    //using (StreamWriter sw = File.CreateText(CGMPath + @"\" + FileName))
-                                    using (StreamWriter sw = File.CreateText(OutFolder + @"\" + FileName))
+                                    using (StreamWriter sw = File.CreateText(CGMPath + @"\" + FileName))
+                                    //using (StreamWriter sw = File.CreateText(OutFolder + @"\" + FileName))
                                     {
                                         foreach (string msg in AllMessage.Split('\r'))
                                         {
@@ -755,10 +755,10 @@ namespace MindrayBS480_console
                                 }
                                 else
                                 {
-                                    //File.Delete(CGMPath + @"\" + FileName);
-                                    //using (StreamWriter sw = File.CreateText(CGMPath + @"\" + FileName))
-                                    File.Delete(OutFolder + @"\" + FileName);
-                                    using (StreamWriter sw = File.CreateText(OutFolder + @"\" + FileName))
+                                    File.Delete(CGMPath + @"\" + FileName);
+                                    using (StreamWriter sw = File.CreateText(CGMPath + @"\" + FileName))
+                                    //File.Delete(OutFolder + @"\" + FileName);
+                                    //using (StreamWriter sw = File.CreateText(OutFolder + @"\" + FileName))
                                     {
                                         foreach (string msg in AllMessage.Split('\r'))
                                         {
@@ -770,21 +770,21 @@ namespace MindrayBS480_console
                                 // создаем .ok файл в папке для рез-тов
                                 if (OkFileName != "")
                                 {
-                                    //if (!File.Exists(CGMPath + @"\" + OkFileName))
-                                    if (!File.Exists(OutFolder + @"\" + OkFileName))
+                                    if (!File.Exists(CGMPath + @"\" + OkFileName))
+                                    //if (!File.Exists(OutFolder + @"\" + OkFileName))
                                     {
-                                        //using (StreamWriter sw = File.CreateText(CGMPath + @"\" + OkFileName))
-                                        using (StreamWriter sw = File.CreateText(OutFolder + @"\" + OkFileName))
+                                        using (StreamWriter sw = File.CreateText(CGMPath + @"\" + OkFileName))
+                                        //using (StreamWriter sw = File.CreateText(OutFolder + @"\" + OkFileName))
                                         {
                                             sw.WriteLine("ok");
                                         }
                                     }
                                     else
                                     {
-                                        //File.Delete(CGMPath + OkFileName);
-                                        //using (StreamWriter sw = File.CreateText(CGMPath + @"\" + OkFileName))
-                                        File.Delete(OutFolder + OkFileName);
-                                        using (StreamWriter sw = File.CreateText(OutFolder + @"\" + OkFileName))
+                                        File.Delete(CGMPath + OkFileName);
+                                        using (StreamWriter sw = File.CreateText(CGMPath + @"\" + OkFileName))
+                                        //File.Delete(OutFolder + OkFileName);
+                                        //using (StreamWriter sw = File.CreateText(OutFolder + @"\" + OkFileName))
                                         {
                                             sw.WriteLine("ok");
                                         }

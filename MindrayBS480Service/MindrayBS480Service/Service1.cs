@@ -335,7 +335,7 @@ namespace MindrayBS480Service
             client_.Send(SendingMessageBytes);
 
             ExchangeLog($"RID exists. Sending QCK^Q02 to analyzer.");
-            ExchangeLog("LIS:" + "\n" + utf8.GetString(SendingMessageBytes));
+            ExchangeLog("LIS (SRV):" + "\n" + utf8.GetString(SendingMessageBytes));
             ExchangeLog($"");
         }
 
@@ -370,7 +370,6 @@ namespace MindrayBS480Service
         #endregion
 
         #region Отправка DSR - задания анализатору, демографии пациента, тест
-
         static void DSRSending(Socket client_, Encoding utf8, string id, string rid, string pid, string FullName, string birthday, string sex, string sampledate, string dsrDSP29)
         {
             DateTime now = DateTime.Now;

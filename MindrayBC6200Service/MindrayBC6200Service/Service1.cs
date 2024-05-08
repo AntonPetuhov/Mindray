@@ -454,7 +454,6 @@ namespace MindrayBC6200Service
                                     {
                                         DiffExists = true;
                                         ExchangeLog($"Test {LISTestCode} (NEUT#/%) exist in request");
-                                        //ExchangeLog("Tests NEUT# and NEUT% exists in request");
                                     }
 
                                     // если тест RET# или RET%, то есть задание на RET
@@ -462,7 +461,6 @@ namespace MindrayBC6200Service
                                     {
                                         RetExists = true;
                                         ExchangeLog($"Test {LISTestCode} (RET#/%) exist in request");
-                                        //ExchangeLog("Tests RET# and RET% exists in request");
                                     }
 
                                     // если тест NRBC# или NRBC%, то есть задание на NRBC
@@ -470,7 +468,6 @@ namespace MindrayBC6200Service
                                     {
                                         NrbcExists = true;
                                         ExchangeLog($"Test {LISTestCode} (NRBC#/%) exist in request");
-                                        //ExchangeLog("Tests NRBC# and NRBC% exists in request");
                                     }
                                 }
 

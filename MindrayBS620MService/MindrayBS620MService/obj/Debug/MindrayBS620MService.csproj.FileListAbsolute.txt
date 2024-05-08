@@ -1,0 +1,14 @@
+C:\Users\anton.petuhov\source\repos\MindrayBS620MService\MindrayBS620MService\bin\Debug\MindrayBS620MService.exe.config
+C:\Users\anton.petuhov\source\repos\MindrayBS620MService\MindrayBS620MService\bin\Debug\MindrayBS620MService.exe
+C:\Users\anton.petuhov\source\repos\MindrayBS620MService\MindrayBS620MService\bin\Debug\MindrayBS620MService.pdb
+C:\Users\anton.petuhov\source\repos\MindrayBS620MService\MindrayBS620MService\bin\Debug\System.Configuration.ConfigurationManager.dll
+C:\Users\anton.petuhov\source\repos\MindrayBS620MService\MindrayBS620MService\bin\Debug\System.Security.AccessControl.dll
+C:\Users\anton.petuhov\source\repos\MindrayBS620MService\MindrayBS620MService\bin\Debug\System.Security.Permissions.dll
+C:\Users\anton.petuhov\source\repos\MindrayBS620MService\MindrayBS620MService\bin\Debug\System.Security.Principal.Windows.dll
+C:\Users\anton.petuhov\source\repos\MindrayBS620MService\MindrayBS620MService\bin\Debug\System.Configuration.ConfigurationManager.xml
+C:\Users\anton.petuhov\source\repos\MindrayBS620MService\MindrayBS620MService\bin\Debug\System.Security.AccessControl.xml
+C:\Users\anton.petuhov\source\repos\MindrayBS620MService\MindrayBS620MService\bin\Debug\System.Security.Permissions.xml
+C:\Users\anton.petuhov\source\repos\MindrayBS620MService\MindrayBS620MService\bin\Debug\System.Security.Principal.Windows.xml
+C:\Users\anton.petuhov\source\repos\MindrayBS620MService\MindrayBS620MService\obj\Debug\MindrayBS620MService.csproj.CopyComplete
+C:\Users\anton.petuhov\source\repos\MindrayBS620MService\MindrayBS620MService\obj\Debug\MindrayBS620MService.exe
+C:\Users\anton.petuhov\source\repos\MindrayBS620MService\MindrayBS620MService\obj\Debug\MindrayBS620MService.pdb

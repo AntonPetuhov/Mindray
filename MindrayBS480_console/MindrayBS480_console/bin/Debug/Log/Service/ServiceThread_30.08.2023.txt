@@ -1,0 +1,5 @@
+30.08.2023 12:13:58: Сервис начал работу.
+30.08.2023 12:13:58: Exception: System.Net.Sockets.SocketException (0x80004005): Требуемый адрес для своего контекста неверен
+   в System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   в MindrayBS480_console.Program.TCPServer() в C:\Users\anton.petuhov\source\repos\Mindray\MindrayBS480_console\MindrayBS480_console\Program.cs:строка 855
