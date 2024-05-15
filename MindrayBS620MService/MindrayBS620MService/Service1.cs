@@ -342,7 +342,7 @@ namespace MindrayBS620MService
 
         #endregion
 
-        #region Отправка QCK^Q02, если текущего RID не существует
+        #region Отправка QCK^Q02, если текущего RID не существует или нет заданий
         // If the sample of the bar code does not exist,
         static void QCKNFSending(Socket client_, Encoding utf8, string id)
         {
@@ -364,7 +364,7 @@ namespace MindrayBS620MService
 
             client_.Send(SendingMessageBytes);
 
-            ExchangeLog($"RID does NOT exist. Sending QCK^Q02 to analyzer.");
+            ExchangeLog($"RID does NOT exist or there is no test to perform. Sending QCK^Q02 to analyzer.");
             ExchangeLog("LIS (SRV):" + "\n" + utf8.GetString(SendingMessageBytes));
             ExchangeLog($"");
         }
@@ -411,7 +411,8 @@ namespace MindrayBS620MService
             string dsrDSP20 = $@"DSP|20|||||";
 
             string dsrDSP21 = $@"DSP|21||{rid}|||";
-            string dsrDSP22 = $@"DSP|22||3|||";
+            //string dsrDSP22 = $@"DSP|22||3|||";
+            string dsrDSP22 = $@"DSP|22||{rid}|||";
             string dsrDSP23 = $@"DSP|23||{sampledate}|||";
             string dsrDSP24 = $@"DSP|24||N|||";
             string dsrDSP25 = $@"DSP|25|||||";
@@ -497,6 +498,8 @@ namespace MindrayBS620MService
                     if (Reader.HasRows)
                     {
                         RIDExists = true;
+                        ExchangeLog($"RID exists: {RIDExists}");
+
                         // получаем данные по заявке
                         while (Reader.Read())
                         {
@@ -523,19 +526,23 @@ namespace MindrayBS620MService
                     // Если есть ШК, то смотрим, есть ли задания
                     if (RIDExists)
                     {
-                        SqlCommand TestCodeCommand = new SqlCommand(
-                            "SELECT b.ana_analyskod, prov.pro_provdat " +
-                            "FROM dbo.remiss (NOLOCK) r " +
-                              "INNER JOIN dbo.bestall (NOLOCK) b ON b.rem_id = r.rem_id " +
-                              "INNER JOIN dbo.prov (NOLOCK) prov ON prov.pro_id = b.pro_id " +
-                            "WHERE r.rem_deaktiv = 'O' " +
-                            $"AND r.rem_rid IN('{RIDPar}') " +
-                            //"AND r.rem_ank_dttm IS NOT NULL", CGMconnection);
-                            "AND r.rem_ank_dttm IS NOT NULL " +
-                            "AND b.bes_t_dttm IS NULL", CGMconnection); // bes_t_dttm дата теста, если ее нет, нет и результата, берем только эти тесты
-                        SqlDataReader TestsReader = TestCodeCommand.ExecuteReader();
+                        // в качестве задания нужно получить тесты которые не отвалидированы
+                        // либо тесты с которых снята валидация (Reject) - b.bes_svarstat = 'U, 
+                        // либо новые тесты (b.bes_svarstat IS NULL AND b.bes_antalomg = 0), зарегистрированные и без результата
+                         
 
-                        ExchangeLog("RID exists.");
+                        SqlCommand TestCodeCommand = new SqlCommand(
+                           "SELECT b.ana_analyskod, prov.pro_provdat " +
+                           "FROM dbo.remiss (NOLOCK) r " +
+                             "INNER JOIN dbo.bestall (NOLOCK) b ON b.rem_id = r.rem_id " +
+                             "INNER JOIN dbo.prov (NOLOCK) prov ON prov.pro_id = b.pro_id " +
+                           "WHERE r.rem_deaktiv = 'O' " +
+                           $"AND r.rem_rid IN('{RIDPar}') " +
+                           "AND r.rem_ank_dttm IS NOT NULL " +
+                           "AND b.bes_t_dttm IS NULL " +  // bes_t_dttm дата теста, если ее нет, тест не отвалидирован, эти тесты должны быть в задании
+                           //либо тесты с которых снята валидация (Reject), либо новые тесты (b.bes_svarstat IS NULL AND b.bes_antalomg = 0)
+                           "AND (b.bes_svarstat = 'U' OR (b.bes_svarstat IS NULL AND b.bes_antalomg = 0))", CGMconnection); 
+                        SqlDataReader TestsReader = TestCodeCommand.ExecuteReader();
 
                         // Если задания есть
                         if (TestsReader.HasRows)
@@ -583,14 +590,24 @@ namespace MindrayBS620MService
                 // Если ШК существует, то отправляем подтверждение QCK^Q02
                 if (RIDExists)
                 {
-                    // отправляем сообщение с подтверждением
-                    QCKSending(client_, utf8, id);
+                    // если блок с тестами для выолнения DSP не пустой
+                    if(DSPTests != "")
+                    {
+                        // отправляем сообщение с подтверждением
+                        QCKSending(client_, utf8, id);
 
-                    Thread.Sleep(100);
+                        Thread.Sleep(100);
 
-                    FullName = PatientSurname + ' ' + PatientName;
-                    // отправляем прибору задание и демографию пациента
-                    DSRSending(client_, utf8, id, RIDPar, PID, FullName, PatientBirthDay, PatientSex, SampleDate, DSPTests);
+                        FullName = PatientSurname + ' ' + PatientName;
+                        // отправляем прибору задание и демографию пациента
+                        DSRSending(client_, utf8, id, RIDPar, PID, FullName, PatientBirthDay, PatientSex, SampleDate, DSPTests);
+                    }
+                    else
+                    {
+                        // тестов в задании нет, отправляем сообщение
+                        QCKNFSending(client_, utf8, id);
+                    }
+                  
                 }
                 // Если не удалось найти ШК в ЛИС
                 else
@@ -928,27 +945,12 @@ namespace MindrayBS620MService
 
                             do
                             {
-                                /*
-                                ExchangeLog(received_data[received_data.Length - 1].ToString());
-                                if (received_data[received_data.Length - 1] == FS[0])
-                                    //if (received_data[received_data.Length - 1] == 0x1C)
-                                {
-                                    ExchangeLog("Byte FS. Break reading cycle.");
-                                    break;
-                                }
-                                */
                                 received_bytes = client.Receive(received_data);
-
-
-                                //ExchangeLog("Текущий последний байт:");
-                                //ExchangeLog(received_data[received_data.Length-1].ToString());
-
                                 // GetString - декодирует последовательность байтов из указанного массива байтов в строку.
                                 // преобразуем полученный набор байтов в строку
                                 string ResponseMsg = Encoding.UTF8.GetString(received_data, 0, received_bytes);
                                 // добавляем в Stringbuilder
                                 messageFromMindray.Append(ResponseMsg);
-
                             }
                             while (client.Available > 0);
 
@@ -1082,7 +1084,6 @@ namespace MindrayBS620MService
             }
         }
         #endregion
-
 
         protected override void OnStart(string[] args)
         {

@@ -332,7 +332,7 @@ namespace MindrayBS620M_console
 
         #endregion
 
-        #region Отправка QCK^Q02, если текущего RID не существует
+        #region Отправка QCK^Q02, если текущего RID не существует или нет задания
         // If the sample of the bar code does not exist,
         static void QCKNFSending(Socket client_, Encoding utf8, string id)
         {
@@ -354,7 +354,7 @@ namespace MindrayBS620M_console
 
             client_.Send(SendingMessageBytes);
 
-            ExchangeLog($"RID does NOT exist. Sending QCK^Q02 to analyzer.");
+            ExchangeLog($"RID does NOT exist or there is no test to perform. Sending QCK^Q02 to analyzer.");
             ExchangeLog("LIS (SRV):" + "\n" + utf8.GetString(SendingMessageBytes));
             ExchangeLog($"");
         }
@@ -442,7 +442,7 @@ namespace MindrayBS620M_console
 
         #endregion
 
-        #region получение данных по заявке и отправка прибору задания  DSR^Q03
+        #region получение данных по заявке и отправка прибору задания DSR^Q03
         public static void GetRequestFromCGMDB(Socket client_, Encoding utf8, string id, string RIDPar)
         {
             // переменные для данных из CGM
@@ -474,7 +474,7 @@ namespace MindrayBS620M_console
                     SqlCommand RequestDataCommand = new SqlCommand(
                        "SELECT TOP 1" +
                          "p.pop_pid AS PID, p.pop_enamn AS PatientSurname, p.pop_fnamn AS PatientName, p.pop_fdatum AS PatientBirthday, " +
-                         "CASE WHEN p.pop_kon = 'K' THEN 'Female' ELSE 'Male' END AS PatientSex, " +
+                         "CASE WHEN p.pop_kon = 'K' THEN 'F' ELSE 'M' END AS PatientSex, " +
                          "r.rem_ank_dttm AS RegistrationDate " +
                        "FROM dbo.remiss (NOLOCK) r " +
                          "INNER JOIN dbo.pop (NOLOCK) p ON p.pop_pid = r.pop_pid " +
@@ -487,6 +487,8 @@ namespace MindrayBS620M_console
                     if (Reader.HasRows)
                     {
                         RIDExists = true;
+                        ExchangeLog($"RID exists: {RIDExists}");
+
                         // получаем данные по заявке
                         while (Reader.Read())
                         {
@@ -513,17 +515,23 @@ namespace MindrayBS620M_console
                     // Если есть ШК, то смотрим, есть ли задания
                     if (RIDExists)
                     {
-                        SqlCommand TestCodeCommand = new SqlCommand(
-                            "SELECT b.ana_analyskod, prov.pro_provdat " +
-                            "FROM dbo.remiss (NOLOCK) r " +
-                              "INNER JOIN dbo.bestall (NOLOCK) b ON b.rem_id = r.rem_id " +
-                              "INNER JOIN dbo.prov (NOLOCK) prov ON prov.pro_id = b.pro_id " +
-                            "WHERE r.rem_deaktiv = 'O' " +
-                            $"AND r.rem_rid IN('{RIDPar}') " +
-                            "AND r.rem_ank_dttm IS NOT NULL", CGMconnection);
-                        SqlDataReader TestsReader = TestCodeCommand.ExecuteReader();
+                        // в качестве задания нужно получить тесты которые не отвалидированы
+                        // либо тесты с которых снята валидация (Reject) - b.bes_svarstat = 'U, 
+                        // либо новые тесты (b.bes_svarstat IS NULL AND b.bes_antalomg = 0), зарегистрированные и без результата
 
-                        ExchangeLog("RID exists.");
+
+                        SqlCommand TestCodeCommand = new SqlCommand(
+                           "SELECT b.ana_analyskod, prov.pro_provdat " +
+                           "FROM dbo.remiss (NOLOCK) r " +
+                             "INNER JOIN dbo.bestall (NOLOCK) b ON b.rem_id = r.rem_id " +
+                             "INNER JOIN dbo.prov (NOLOCK) prov ON prov.pro_id = b.pro_id " +
+                           "WHERE r.rem_deaktiv = 'O' " +
+                           $"AND r.rem_rid IN('{RIDPar}') " +
+                           "AND r.rem_ank_dttm IS NOT NULL " +
+                           "AND b.bes_t_dttm IS NULL " +  // bes_t_dttm дата теста, если ее нет, тест не отвалидирован, эти тесты должны быть в задании
+                                                          //либо тесты с которых снята валидация (Reject), либо новые тесты (b.bes_svarstat IS NULL AND b.bes_antalomg = 0)
+                           "AND (b.bes_svarstat = 'U' OR (b.bes_svarstat IS NULL AND b.bes_antalomg = 0))", CGMconnection);
+                        SqlDataReader TestsReader = TestCodeCommand.ExecuteReader();
 
                         // Если задания есть
                         if (TestsReader.HasRows)
@@ -555,7 +563,7 @@ namespace MindrayBS620M_console
                                     else
                                     {
                                         ExchangeLog($"Test code {LISTestCode} could not be converted. The test is not configured to be transmitted to analyzer.");
-                                    }   
+                                    }
                                 }
                                 // Sample date from prov table
                                 SampleDateDate = TestsReader.GetDateTime(1);
@@ -571,14 +579,24 @@ namespace MindrayBS620M_console
                 // Если ШК существует, то отправляем подтверждение QCK^Q02
                 if (RIDExists)
                 {
-                    // отправляем сообщение с подтверждением
-                    QCKSending(client_, utf8, id);
+                    // если блок с тестами для выолнения DSP не пустой
+                    if (DSPTests != "")
+                    {
+                        // отправляем сообщение с подтверждением
+                        QCKSending(client_, utf8, id);
 
-                    Thread.Sleep(100);
+                        Thread.Sleep(100);
 
-                    FullName = PatientSurname + ' ' + PatientName;
-                    // отправляем прибору задание и демографию пациента
-                    DSRSending(client_, utf8, id, RIDPar, PID, FullName, PatientBirthDay, PatientSex, SampleDate, DSPTests);
+                        FullName = PatientSurname + ' ' + PatientName;
+                        // отправляем прибору задание и демографию пациента
+                        DSRSending(client_, utf8, id, RIDPar, PID, FullName, PatientBirthDay, PatientSex, SampleDate, DSPTests);
+                    }
+                    else
+                    {
+                        // тестов в задании нет, отправляем сообщение
+                        QCKNFSending(client_, utf8, id);
+                    }
+
                 }
                 // Если не удалось найти ШК в ЛИС
                 else
@@ -593,6 +611,77 @@ namespace MindrayBS620M_console
                 ServiceLog($"{ex}");
             }
 
+        }
+
+        public static void GetTestRequestQuery(string RIDPar)
+        {
+            string CGMConnectionString = ConfigurationManager.ConnectionStrings["CGMConnection"].ConnectionString;
+            CGMConnectionString = String.Concat(CGMConnectionString, $"User Id = {user}; Password = {password}");
+
+            try
+            {
+                using (SqlConnection CGMconnection = new SqlConnection(CGMConnectionString))
+                {
+                    CGMconnection.Open();
+
+                    //ищем RID в базе
+                    SqlCommand RequestDataCommand = new SqlCommand(
+                       "SELECT TOP 1" +
+                         "p.pop_pid AS PID, p.pop_enamn AS PatientSurname, p.pop_fnamn AS PatientName, p.pop_fdatum AS PatientBirthday, " +
+                         "CASE WHEN p.pop_kon = 'K' THEN 'Female' ELSE 'Male' END AS PatientSex, " +
+                         "r.rem_ank_dttm AS RegistrationDate " +
+                       "FROM dbo.remiss (NOLOCK) r " +
+                         "INNER JOIN dbo.pop (NOLOCK) p ON p.pop_pid = r.pop_pid " +
+                       "WHERE r.rem_deaktiv = 'O' " +
+                         $"AND r.rem_rid IN ('{RIDPar}') " +
+                         "AND r.rem_ank_dttm IS NOT NULL ", CGMconnection);
+                    SqlDataReader Reader = RequestDataCommand.ExecuteReader();
+
+                    // если такой ШК есть
+                    if (Reader.HasRows)
+                    {
+                        ServiceLog("RID exist!!!!!!!!!!!!!1111");
+                        Console.WriteLine("RID exist!!!!!!!!!!!!!1111");
+                    }
+                    Reader.Close();
+
+                    Thread.Sleep(2000);
+
+                    SqlCommand TestCodeCommand = new SqlCommand(
+                            "SELECT b.ana_analyskod, prov.pro_provdat " +
+                            "FROM dbo.remiss (NOLOCK) r " +
+                              "INNER JOIN dbo.bestall (NOLOCK) b ON b.rem_id = r.rem_id " +
+                              "INNER JOIN dbo.prov (NOLOCK) prov ON prov.pro_id = b.pro_id " +
+                              "LEFT JOIN omgang (NOLOCK) o ON b.rem_id = o.rem_id AND b.pro_id = o.pro_id AND b.ana_analyskod = o.ana_analyskod " +
+                            "WHERE r.rem_deaktiv = 'O' " +
+                            $"AND r.rem_rid IN('{RIDPar}') " +
+                            "AND r.rem_ank_dttm IS NOT NULL " +
+                            "AND b.bes_t_dttm IS NULL " +
+                            "AND (o.omg_svarstat IS NULL OR o.omg_svarstat NOT IN ('V', 'G'))", CGMconnection);
+                    SqlDataReader TestsReader = TestCodeCommand.ExecuteReader();
+
+                    // Если задания есть
+                    if (TestsReader.HasRows)
+                    {
+                        while (TestsReader.Read())
+                        {
+                            if (!TestsReader.IsDBNull(0))
+                            {
+                                string LISTestCode = TestsReader.GetString(0);
+                                Console.WriteLine($"Test CODE: {LISTestCode}");
+                                Thread.Sleep(3000);
+                            }
+                        }
+                    }
+                    TestsReader.Close();
+
+                    CGMconnection.Close();
+                }
+            }
+            catch(Exception ex)
+            {
+                ServiceLog($"Error: {ex}");
+            }
         }
 
         #endregion
@@ -807,7 +896,7 @@ namespace MindrayBS620M_console
                         }
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     FileResultLog(ex.ToString());
                 }
@@ -816,7 +905,6 @@ namespace MindrayBS620M_console
         }
 
         #endregion
-
 
         #region TCP server
         static void TCPServer()
@@ -917,7 +1005,21 @@ namespace MindrayBS620M_console
 
                             do
                             {
+                                /*
+                                ExchangeLog(received_data[received_data.Length - 1].ToString());
+                                if (received_data[received_data.Length - 1] == FS[0])
+                                    //if (received_data[received_data.Length - 1] == 0x1C)
+                                {
+                                    ExchangeLog("Byte FS. Break reading cycle.");
+                                    break;
+                                }
+                                */
                                 received_bytes = client.Receive(received_data);
+
+
+                                //ExchangeLog("Текущий последний байт:");
+                                //ExchangeLog(received_data[received_data.Length-1].ToString());
+
                                 // GetString - декодирует последовательность байтов из указанного массива байтов в строку.
                                 // преобразуем полученный набор байтов в строку
                                 string ResponseMsg = Encoding.UTF8.GetString(received_data, 0, received_bytes);
@@ -965,6 +1067,10 @@ namespace MindrayBS620M_console
 
                             #endregion
 
+                            // косяк в том, что при постановке нескольких проб, прибор в одном сообщении отправляет ACK на задание и сообщение QRY с запросом на следующий ШК
+                            // таким образом в одном сообщении - 2 MessageId
+
+                            /*
                             #region нахождение MessageId в сообщении анализатора
                             // шаблона для поиска Message Id в сообщении от прибора
                             string MessageIdPattern = @"\S+[|](?<MessageId>\d+)[|]P[|]2.3.1[|]";
@@ -978,10 +1084,27 @@ namespace MindrayBS620M_console
                                 ExchangeLog($"Message ID : {MessageId}");
                             }
                             #endregion
+                            */
 
                             // если сообщение с результатами - ORU
                             if (ORU == "ORU")
                             {
+                                #region определим messageId
+
+                                // шаблона для поиска Message Id в сообщении с результатом от прибора
+                                string MessageIdPattern = @"\S+[|](?<MessageId>\d+)[|]P[|]2.3.1[|]";
+                                Regex MessageIdRegex = new Regex(MessageIdPattern, RegexOptions.None, TimeSpan.FromMilliseconds(150));
+                                string MessageId = "";
+
+                                Match MessageIdMatch = MessageIdRegex.Match(messageMindray);
+                                if (MessageIdMatch.Success)
+                                {
+                                    MessageId = MessageIdMatch.Result("${MessageId}");
+                                    ExchangeLog($"Message ID : {MessageId}");
+                                }
+
+                                #endregion
+
                                 ExchangeLog("Creating Result file");
                                 // формируем файл с результатом
                                 MakeAnalyzerResultFile(messageFromMindray.ToString());
@@ -992,6 +1115,22 @@ namespace MindrayBS620M_console
                             // если прибор запрашивает задание - QRY
                             if (QRY == "QRY")
                             {
+                                #region определим messageId в сообщении с запросом задания
+
+                                // шаблона для поиска Message Id в сообщении от прибора
+                                string MessageIdPattern = @"\S+[|]QRY@Q02[|](?<MessageId>\d+)[|]P[|]2.3.1[|]";
+                                Regex MessageIdRegex = new Regex(MessageIdPattern, RegexOptions.None, TimeSpan.FromMilliseconds(150));
+                                string MessageId = "";
+
+                                Match MessageIdMatch = MessageIdRegex.Match(messageMindray);
+                                if (MessageIdMatch.Success)
+                                {
+                                    MessageId = MessageIdMatch.Result("${MessageId}");
+                                    ExchangeLog($"Message ID : {MessageId}");
+                                }
+
+                                #endregion
+
                                 // шаблона для поиска RID в сообщении от прибора QRY
                                 string RIDPattern = @"QRD[|]\S+RD[|](?<RID>\d+)[|]OTH[|]\S+";
                                 Regex RIDRegex = new Regex(RIDPattern, RegexOptions.None, TimeSpan.FromMilliseconds(150));
@@ -1014,7 +1153,7 @@ namespace MindrayBS620M_console
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ServiceLog($"Exception: {ex}");
             }
@@ -1027,7 +1166,6 @@ namespace MindrayBS620M_console
             ServiceLog("Сервис начал работу.");
             Console.WriteLine("Сервис начал работу.");
 
-
             //TCP сервер для прибора
             Thread TCPServerThread = new Thread(new ThreadStart(TCPServer));
             TCPServerThread.Name = "TCPServer";
@@ -1037,6 +1175,12 @@ namespace MindrayBS620M_console
             Thread ResultProcessingThread = new Thread(ResultsProcessing);
             ResultProcessingThread.Name = "ResultsProcessing";
             ResultProcessingThread.Start();
+
+            /*
+            // проверка работы запроса
+            string RID = "0000002759";
+            GetTestRequestQuery(RID);
+            */
 
             Console.ReadLine();
         }

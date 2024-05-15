@@ -119,3 +119,4 @@ C:\Users\anton.petuhov\source\repos\MindrayBS620M_console\MindrayBS620M_console\
 C:\Users\anton.petuhov\source\repos\MindrayBS620M_console\MindrayBS620M_console\bin\Debug\System.Security.AccessControl.xml
 C:\Users\anton.petuhov\source\repos\MindrayBS620M_console\MindrayBS620M_console\bin\Debug\System.Security.Permissions.xml
 C:\Users\anton.petuhov\source\repos\MindrayBS620M_console\MindrayBS620M_console\bin\Debug\System.Security.Principal.Windows.xml
+C:\Users\anton.petuhov\source\repos\MindrayBS620M_console\MindrayBS620M_console\obj\Debug\MindrayBS620M_console.csprojAssemblyReference.cache
