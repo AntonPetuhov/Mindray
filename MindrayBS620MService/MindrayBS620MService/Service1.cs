@@ -677,10 +677,12 @@ namespace MindrayBS620MService
                     // Предполагаем, что в названии теста нет цифр
                     //string ResultPattern = @"OBX[|]\d+[|]NM[|]\d+[|]\D+[|](?<Result>\d+[.]?\d*)[|]\S+";
 
-                    // Если в названии теста передается в том числе цифра
-                    string ResultPattern = @"OBX[|]\d+[|]NM[|]\d+[|]\D+[1]?\D+[|](?<Result>\d+[.]?\d*)[|]\S+";
+                    // Если в названии теста передается в том числе цифра и в результате может быть знак < или >
+                    //string ResultPattern = @"OBX[|]\d+[|]NM[|]\d+[|]\D+[1]?\D+[|](?<Result>\d+[.]?\d*)[|]\S+";
+                    string ResultPattern = @"OBX[|]\d+[|]NM[|]\d+[|]\D+[1]?\D+[|](?<Result>[<>]?\d+[.]?\d*)[|]\S+";
 
-                              Regex RIDRegex = new Regex(RIDPattern, RegexOptions.None, TimeSpan.FromMilliseconds(150));
+
+                    Regex RIDRegex = new Regex(RIDPattern, RegexOptions.None, TimeSpan.FromMilliseconds(150));
                     Regex TestRegex = new Regex(TestPattern, RegexOptions.None, TimeSpan.FromMilliseconds(150));
                     Regex ResultRegex = new Regex(ResultPattern, RegexOptions.None, TimeSpan.FromMilliseconds(150));
 
