@@ -679,7 +679,10 @@ namespace MindrayBS620MService
 
                     // Если в названии теста передается в том числе цифра и в результате может быть знак < или >
                     //string ResultPattern = @"OBX[|]\d+[|]NM[|]\d+[|]\D+[1]?\D+[|](?<Result>\d+[.]?\d*)[|]\S+";
-                    string ResultPattern = @"OBX[|]\d+[|]NM[|]\d+[|]\D+[1]?\D+[|](?<Result>[<>]?\d+[.]?\d*)[|]\S+";
+                    //string ResultPattern = @"OBX[|]\d+[|]NM[|]\d+[|]\D+[1]?\D+[|](?<Result>[<>]?\d+[.]?\d*)[|]\S+";
+                    
+                    // подходит ко всем методикам, которые есть на данный момент на приборе
+                    string ResultPattern = @"OBX[|]\d+[|]NM[|]\d+[|]\w+[-,\s]?\d?\D*[|](?<Result>[<>]?\d+[.]?\d*)[|]\S+";
 
 
                     Regex RIDRegex = new Regex(RIDPattern, RegexOptions.None, TimeSpan.FromMilliseconds(150));

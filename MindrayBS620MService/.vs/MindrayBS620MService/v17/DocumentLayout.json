@@ -1,0 +1,68 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\anton.petuhov\\source\\repos\\Mindray\\MindrayBS620MService\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{16F4B2AA-C400-4EDC-9F7B-9EB7BE7DC407}|MindrayBS620MService\\MindrayBS620MService.csproj|c:\\users\\anton.petuhov\\source\\repos\\mindray\\mindraybs620mservice\\mindraybs620mservice\\service1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{16F4B2AA-C400-4EDC-9F7B-9EB7BE7DC407}|MindrayBS620MService\\MindrayBS620MService.csproj|solutionrelative:mindraybs620mservice\\service1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{16F4B2AA-C400-4EDC-9F7B-9EB7BE7DC407}|MindrayBS620MService\\MindrayBS620MService.csproj|C:\\Users\\anton.petuhov\\source\\repos\\Mindray\\MindrayBS620MService\\mindraybs620mservice\\service1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{16F4B2AA-C400-4EDC-9F7B-9EB7BE7DC407}|MindrayBS620MService\\MindrayBS620MService.csproj|solutionrelative:mindraybs620mservice\\service1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{16F4B2AA-C400-4EDC-9F7B-9EB7BE7DC407}|MindrayBS620MService\\MindrayBS620MService.csproj|C:\\Users\\anton.petuhov\\source\\repos\\Mindray\\MindrayBS620MService\\mindraybs620mservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{16F4B2AA-C400-4EDC-9F7B-9EB7BE7DC407}|MindrayBS620MService\\MindrayBS620MService.csproj|solutionrelative:mindraybs620mservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Service1.cs",
+              "DocumentMoniker": "C:\\Users\\anton.petuhov\\source\\repos\\Mindray\\MindrayBS620MService\\MindrayBS620MService\\Service1.cs",
+              "RelativeDocumentMoniker": "MindrayBS620MService\\Service1.cs",
+              "ToolTip": "C:\\Users\\anton.petuhov\\source\\repos\\Mindray\\MindrayBS620MService\\MindrayBS620MService\\Service1.cs",
+              "RelativeToolTip": "MindrayBS620MService\\Service1.cs",
+              "ViewState": "AQIAAB0BAAAAAAAAAADwv6sCAAAyAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-13T08:54:59.093Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Service1.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "DocumentMoniker": "C:\\Users\\anton.petuhov\\source\\repos\\Mindray\\MindrayBS620MService\\MindrayBS620MService\\Service1.cs",
+              "RelativeDocumentMoniker": "MindrayBS620MService\\Service1.cs",
+              "ToolTip": "C:\\Users\\anton.petuhov\\source\\repos\\Mindray\\MindrayBS620MService\\MindrayBS620MService\\Service1.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "RelativeToolTip": "MindrayBS620MService\\Service1.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-13T07:48:20.507Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\anton.petuhov\\source\\repos\\Mindray\\MindrayBS620MService\\MindrayBS620MService\\Program.cs",
+              "RelativeDocumentMoniker": "MindrayBS620MService\\Program.cs",
+              "ToolTip": "C:\\Users\\anton.petuhov\\source\\repos\\Mindray\\MindrayBS620MService\\MindrayBS620MService\\Program.cs",
+              "RelativeToolTip": "MindrayBS620MService\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-13T07:41:15.255Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

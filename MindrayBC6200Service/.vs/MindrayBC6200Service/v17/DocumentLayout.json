@@ -1,0 +1,99 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\anton.petuhov\\source\\repos\\Mindray\\MindrayBC6200Service\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{8AE2F705-6D6F-454C-9F8B-9AD434A4BEBF}|MindrayBC6200Service\\MindrayBC6200Service.csproj|c:\\users\\anton.petuhov\\source\\repos\\mindray\\mindraybc6200service\\mindraybc6200service\\service1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8AE2F705-6D6F-454C-9F8B-9AD434A4BEBF}|MindrayBC6200Service\\MindrayBC6200Service.csproj|solutionrelative:mindraybc6200service\\service1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8AE2F705-6D6F-454C-9F8B-9AD434A4BEBF}|MindrayBC6200Service\\MindrayBC6200Service.csproj|C:\\Users\\anton.petuhov\\source\\repos\\Mindray\\MindrayBC6200Service\\mindraybc6200service\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8AE2F705-6D6F-454C-9F8B-9AD434A4BEBF}|MindrayBC6200Service\\MindrayBC6200Service.csproj|solutionrelative:mindraybc6200service\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8AE2F705-6D6F-454C-9F8B-9AD434A4BEBF}|MindrayBC6200Service\\MindrayBC6200Service.csproj|C:\\Users\\anton.petuhov\\source\\repos\\Mindray\\MindrayBC6200Service\\mindraybc6200service\\installer1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8AE2F705-6D6F-454C-9F8B-9AD434A4BEBF}|MindrayBC6200Service\\MindrayBC6200Service.csproj|solutionrelative:mindraybc6200service\\installer1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8AE2F705-6D6F-454C-9F8B-9AD434A4BEBF}|MindrayBC6200Service\\MindrayBC6200Service.csproj|C:\\Users\\anton.petuhov\\source\\repos\\Mindray\\MindrayBC6200Service\\mindraybc6200service\\installer1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{8AE2F705-6D6F-454C-9F8B-9AD434A4BEBF}|MindrayBC6200Service\\MindrayBC6200Service.csproj|solutionrelative:mindraybc6200service\\installer1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8AE2F705-6D6F-454C-9F8B-9AD434A4BEBF}|MindrayBC6200Service\\MindrayBC6200Service.csproj|C:\\Users\\anton.petuhov\\source\\repos\\Mindray\\MindrayBC6200Service\\mindraybc6200service\\service1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{8AE2F705-6D6F-454C-9F8B-9AD434A4BEBF}|MindrayBC6200Service\\MindrayBC6200Service.csproj|solutionrelative:mindraybc6200service\\service1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Installer1.cs",
+              "DocumentMoniker": "C:\\Users\\anton.petuhov\\source\\repos\\Mindray\\MindrayBC6200Service\\MindrayBC6200Service\\Installer1.cs",
+              "RelativeDocumentMoniker": "MindrayBC6200Service\\Installer1.cs",
+              "ToolTip": "C:\\Users\\anton.petuhov\\source\\repos\\Mindray\\MindrayBC6200Service\\MindrayBC6200Service\\Installer1.cs",
+              "RelativeToolTip": "MindrayBC6200Service\\Installer1.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000587|",
+              "WhenOpened": "2024-03-12T12:01:55.25Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Installer1.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "DocumentMoniker": "C:\\Users\\anton.petuhov\\source\\repos\\Mindray\\MindrayBC6200Service\\MindrayBC6200Service\\Installer1.cs",
+              "RelativeDocumentMoniker": "MindrayBC6200Service\\Installer1.cs",
+              "ToolTip": "C:\\Users\\anton.petuhov\\source\\repos\\Mindray\\MindrayBC6200Service\\MindrayBC6200Service\\Installer1.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "RelativeToolTip": "MindrayBC6200Service\\Installer1.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000587|",
+              "WhenOpened": "2024-03-12T12:01:53.834Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\anton.petuhov\\source\\repos\\Mindray\\MindrayBC6200Service\\MindrayBC6200Service\\Program.cs",
+              "RelativeDocumentMoniker": "MindrayBC6200Service\\Program.cs",
+              "ToolTip": "C:\\Users\\anton.petuhov\\source\\repos\\Mindray\\MindrayBC6200Service\\MindrayBC6200Service\\Program.cs",
+              "RelativeToolTip": "MindrayBC6200Service\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAqwAkAAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-02-28T09:52:32.28Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Service1.cs",
+              "DocumentMoniker": "C:\\Users\\anton.petuhov\\source\\repos\\Mindray\\MindrayBC6200Service\\MindrayBC6200Service\\Service1.cs",
+              "RelativeDocumentMoniker": "MindrayBC6200Service\\Service1.cs",
+              "ToolTip": "C:\\Users\\anton.petuhov\\source\\repos\\Mindray\\MindrayBC6200Service\\MindrayBC6200Service\\Service1.cs",
+              "RelativeToolTip": "MindrayBC6200Service\\Service1.cs",
+              "ViewState": "AQIAABoCAAAAAAAAAAAkwEYCAABUAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2023-09-14T07:30:33.374Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Service1.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "DocumentMoniker": "C:\\Users\\anton.petuhov\\source\\repos\\Mindray\\MindrayBC6200Service\\MindrayBC6200Service\\Service1.cs",
+              "RelativeDocumentMoniker": "MindrayBC6200Service\\Service1.cs",
+              "ToolTip": "C:\\Users\\anton.petuhov\\source\\repos\\Mindray\\MindrayBC6200Service\\MindrayBC6200Service\\Service1.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "RelativeToolTip": "MindrayBC6200Service\\Service1.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000587|",
+              "WhenOpened": "2023-09-14T07:30:30.709Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
