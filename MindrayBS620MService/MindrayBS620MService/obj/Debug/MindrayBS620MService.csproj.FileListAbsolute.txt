@@ -12,3 +12,4 @@ C:\Users\anton.petuhov\source\repos\MindrayBS620MService\MindrayBS620MService\bi
 C:\Users\anton.petuhov\source\repos\MindrayBS620MService\MindrayBS620MService\obj\Debug\MindrayBS620MService.csproj.CopyComplete
 C:\Users\anton.petuhov\source\repos\MindrayBS620MService\MindrayBS620MService\obj\Debug\MindrayBS620MService.exe
 C:\Users\anton.petuhov\source\repos\MindrayBS620MService\MindrayBS620MService\obj\Debug\MindrayBS620MService.pdb
+C:\Users\anton.petuhov\source\repos\MindrayBS620MService\MindrayBS620MService\obj\Debug\MindrayBS620MService.csprojAssemblyReference.cache
