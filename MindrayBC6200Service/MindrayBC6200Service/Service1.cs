@@ -599,6 +599,9 @@ namespace MindrayBC6200Service
                         //string Result = "";
                         string Comment = "";
 
+                        // переменная для костыля, чтобы отсекать WBC_correct тест из сообщения с результатом, чтобы не дублировался результат
+                        bool wbcExist = false;
+
                         // обрезаем только имя текущего файла
                         string FileName = file.Substring(AnalyzerResultPath.Length + 1);
                         // название файла .ок, который должен создаваться вместе с результирующим для обработки службой FileGetterService
@@ -632,6 +635,18 @@ namespace MindrayBC6200Service
                             if (TestMatch.Success)
                             {
                                 Test = TestMatch.Result("${Test}");
+
+                                // костыль для отсечения повторного WBC (WBC_CORRECT)
+                                if (Test == "WBC" && wbcExist == false) 
+                                { 
+                                    wbcExist = true; 
+                                }
+                                else if (Test == "WBC" && wbcExist == true)
+                                {
+                                    FileResultLog("Результат теста WBC уже существует.");
+                                    continue;
+                                }
+
                                 // преобразуем тест в код теста PSM
                                 string PSMTestCode = TranslateToPSMCodes(Test);
                                 string Result = "";
@@ -650,6 +665,9 @@ namespace MindrayBC6200Service
                                     {
                                         FileResultLog($"PSMV2 код: {PSMTestCode}");
                                         FileResultLog($"{Test} - результат: {Result}");
+
+
+
                                     }
                                 }
 
