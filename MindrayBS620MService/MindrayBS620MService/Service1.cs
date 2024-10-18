@@ -372,7 +372,7 @@ namespace MindrayBS620MService
         #endregion
 
         #region Отправка DSR - задания анализатору, демографии пациента, тест
-        static void DSRSending(Socket client_, Encoding utf8, string id, string rid, string pid, string FullName, string birthday, string sex, string sampledate, string dsrDSP29)
+        static void DSRSending(Socket client_, Encoding utf8, string id, string rid, string pid, string FullName, string birthday, string sex, string sampledate, string biomaterial, string dsrDSP29)
         {
             DateTime now = DateTime.Now;
             string dsrDate = now.ToString("yyyyMMddHHmmss");
@@ -416,7 +416,10 @@ namespace MindrayBS620MService
             string dsrDSP23 = $@"DSP|23||{sampledate}|||";
             string dsrDSP24 = $@"DSP|24||N|||";
             string dsrDSP25 = $@"DSP|25|||||";
-            string dsrDSP26 = $@"DSP|26||serum|||";
+
+            //string dsrDSP26 = $@"DSP|26||serum|||";
+            string dsrDSP26 = $@"DSP|26||{biomaterial}|||";
+
             string dsrDSP27 = $@"DSP|27||КДЛ|||";
             string dsrDSP28 = $@"DSP|28||КДЛ|||";
 
@@ -471,6 +474,9 @@ namespace MindrayBS620MService
             bool RIDExists = false;
             int dspCounter = 28;
             string DSPTests = "";
+
+            // переменная для биоматериала
+            string biomaterial = "serum";
 
             string CGMConnectionString = ConfigurationManager.ConnectionStrings["CGMConnection"].ConnectionString;
             CGMConnectionString = String.Concat(CGMConnectionString, $"User Id = {user}; Password = {password}");
@@ -553,11 +559,21 @@ namespace MindrayBS620MService
                                 if (!TestsReader.IsDBNull(0))
                                 {
                                     LISTestCode = TestsReader.GetString(0);
+
                                     // преобразуем код теста CGM в код теста, понятный прибору
                                     string AnalyzerTestCode = TranslateToAnalyzerCodes(LISTestCode);
 
                                     if (AnalyzerTestCode != "")
                                     {
+                                        #region проверка не является ли БМ - мочой 
+                                        // проверяем, не относится ли тест к биохимии мочи, если относится, то меняем биоматериал
+                                        if (LISTestCode.StartsWith("БМ"))
+                                        {
+                                            biomaterial = "urine";
+                                        }
+
+                                        #endregion
+
                                         ExchangeLog($"Test code {LISTestCode} converted to {AnalyzerTestCode}");
 
                                         // и для каждого теста формируем строку DSP с заданием, согласно формату HL7
@@ -583,6 +599,8 @@ namespace MindrayBS620MService
                             }
                         }
                         TestsReader.Close();
+
+                        ExchangeLog($"Biomaterial: {biomaterial}");
                     }
                     CGMconnection.Close();
                 }
@@ -600,7 +618,8 @@ namespace MindrayBS620MService
 
                         FullName = PatientSurname + ' ' + PatientName;
                         // отправляем прибору задание и демографию пациента
-                        DSRSending(client_, utf8, id, RIDPar, PID, FullName, PatientBirthDay, PatientSex, SampleDate, DSPTests);
+                        //DSRSending(client_, utf8, id, RIDPar, PID, FullName, PatientBirthDay, PatientSex, SampleDate, DSPTests);
+                        DSRSending(client_, utf8, id, RIDPar, PID, FullName, PatientBirthDay, PatientSex, SampleDate, biomaterial , DSPTests);
                     }
                     else
                     {
