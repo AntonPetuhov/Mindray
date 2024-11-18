@@ -701,7 +701,9 @@ namespace MindrayBS620MService
                     //string ResultPattern = @"OBX[|]\d+[|]NM[|]\d+[|]\D+[1]?\D+[|](?<Result>[<>]?\d+[.]?\d*)[|]\S+";
 
                     // подходит ко всем методикам, которые заведены на данный момент на приборе
-                    string ResultPattern = @"OBX[|]\d+[|]NM[|]\d+[|]\w+[-,\s]?\d?\D*[|](?<Result>[<>]?\d+[.]?\d*)[|]\S+";
+                    //string ResultPattern = @"OBX[|]\d+[|]NM[|]\d+[|]\w+[-,\s]?\d?\D*[|](?<Result>[<>]?\d+[.]?\d*)[|]\S+";
+                    //string ResultPattern = @"OBX[|]\d+[|]NM[|]\d+[|][?]?[-]?\w+[-,\s]?\d?\D*[|](?<Result>[<>]?\d+[.]?\d*)[|]\S+";
+                    string ResultPattern = @"OBX[|]\d+[|]NM[|]\d+[|]\W*\w+[-,\s]?\d?\D*[|](?<Result>[<>]?\d+[.]?\d*)[|]\S+";
 
                     Regex RIDRegex = new Regex(RIDPattern, RegexOptions.None, TimeSpan.FromMilliseconds(150));
                     Regex TestRegex = new Regex(TestPattern, RegexOptions.None, TimeSpan.FromMilliseconds(150));
