@@ -475,7 +475,7 @@ namespace MindrayBS620MService
             int dspCounter = 28;
             string DSPTests = "";
 
-            // переменная для биоматериала
+            // переменная для биоматериала, по умолчанию сыворотка
             string biomaterial = "serum";
 
             string CGMConnectionString = ConfigurationManager.ConnectionStrings["CGMConnection"].ConnectionString;
@@ -565,11 +565,24 @@ namespace MindrayBS620MService
 
                                     if (AnalyzerTestCode != "")
                                     {
-                                        #region проверка не является ли БМ - мочой 
+                                        #region проверка не является ли БМ - мочой или ликвором
                                         // проверяем, не относится ли тест к биохимии мочи, если относится, то меняем биоматериал
                                         if (LISTestCode.StartsWith("БМ"))
                                         {
                                             biomaterial = "urine";
+
+                                            AnalyzerTestCode = AnalyzerTestCode.Substring(1); // обрезаем первый символ 0 в коде теста для мочи
+                                        }
+
+                                        // проверяем не спинномозговая жидкость ли
+                                        string[] likvorTests = new string[] { "КИ0360", "КИ0380", "КИ0385" };
+
+                                        foreach (string i in likvorTests)
+                                        {
+                                            if (LISTestCode == i)
+                                            {
+                                                biomaterial = "CSF";
+                                            }
                                         }
 
                                         #endregion
@@ -693,6 +706,9 @@ namespace MindrayBS620MService
                     // шаблоны регулярных выражений для поиска данных
                     string RIDPattern = @"OBR[|]\d+[|](?<RID>\d+)[|]\S*";
                     string TestPattern = @"OBX[|]\d+[|]NM[|](?<Test>\d+)[|]\S*";
+                    //string SamplePattern = @"OBR[|]\d+[|]\S*[|](?<sample>\w+)[|]КДЛ[|]КДЛ[|]";
+                    string SamplePattern = @"OBR[|]\d+[|]\S*[|](?<sample>\w+)[|]КДЛ[|]КДЛ[|]";
+
                     // Предполагаем, что в названии теста нет цифр
                     //string ResultPattern = @"OBX[|]\d+[|]NM[|]\d+[|]\D+[|](?<Result>\d+[.]?\d*)[|]\S+";
 
@@ -708,14 +724,17 @@ namespace MindrayBS620MService
                     Regex RIDRegex = new Regex(RIDPattern, RegexOptions.None, TimeSpan.FromMilliseconds(150));
                     Regex TestRegex = new Regex(TestPattern, RegexOptions.None, TimeSpan.FromMilliseconds(150));
                     Regex ResultRegex = new Regex(ResultPattern, RegexOptions.None, TimeSpan.FromMilliseconds(150));
+                    Regex SampleRegex = new Regex(SamplePattern, RegexOptions.None, TimeSpan.FromMilliseconds(150));
 
                     // пробегаем по файлам
                     foreach (string file in Files)
                     {
                         FileResultLog(file);
-                        string[] lines = System.IO.File.ReadAllLines(file);
+                        //string[] lines = System.IO.File.ReadAllLines(file);
+                        string[] lines = System.IO.File.ReadAllLines(file, Encoding.GetEncoding(1251));
                         string RID = "";
                         string Test = "";
+                        string Sample = "";
 
                         // обрезаем только имя текущего файла
                         string FileName = file.Substring(AnalyzerResultPath.Length + 1);
@@ -729,6 +748,7 @@ namespace MindrayBS620MService
                             Match RIDMatch = RIDRegex.Match(line_);
                             Match TestMatch = TestRegex.Match(line_);
                             Match ResultMatch = ResultRegex.Match(line_);
+                            Match SampleMatch = SampleRegex.Match(line_);
 
                             // поиск RID в строке
                             if (RIDMatch.Success)
@@ -736,6 +756,12 @@ namespace MindrayBS620MService
                                 RID = RIDMatch.Result("${RID}");
                                 FileResultLog($"Заявка № {RID}");
                                 MessageHead = $"O|1|{RID}||ALL|R|20230101000100|||||X||||ALL||||||||||F";
+
+                                if (SampleMatch.Success)
+                                {
+                                    Sample = SampleMatch.Result("${sample}");
+                                    FileResultLog($"Биоматериал: {Sample}");
+                                }
                             }
 
                             // поиск теста в строке
@@ -743,6 +769,16 @@ namespace MindrayBS620MService
                             {
                                 Test = TestMatch.Result("${Test}");
                                 // преобразуем тест в код теста PSM
+
+                                // костыль для методик, которые могут выполняться для нескольких материалов, например, белок в моче и ликворе , но которые имеют один хост-код
+                                // В Analyzer Configuration БМ0001 имеет код 0479, хотя на приборе по факту он 479, как у ликвора - это одна методика, но в ЛИС - 2 разных теста
+                                // Будем полагать, что коды тестов для мочи в AnalyzerConfiguration, будут начинаться с 0, при условии, что тест с таким же кодом уже имеется (напр. ликвор)
+                                // если результат для образца - моча, то
+                                if (Sample == "Моча")
+                                {
+                                    Test = "0" + Test;
+                                }
+
                                 string PSMTestCode = TranslateToPSMCodes(Test);
                                 string Result = "";
 
